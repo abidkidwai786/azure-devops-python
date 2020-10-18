@@ -1,5 +1,6 @@
 import unittest
 import time
+import os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
@@ -29,14 +30,16 @@ class LTAutomate(unittest.TestCase):
         -------
         """
         # username: Username can be found at automation dashboard
-        username= "divyanks" 
+        username= os.getenv('LT_USERNAME')  
 
         # accessToken:  AccessToken can be genarated from automation dashboard or profile section
-        accessToken= "XFSP1IqZMWTXUC1iwbVqFCClLX654vuFg8OZUMyCfwbfygavq1" 
+        accessToken= os.getenv('LT_ACCESS_KEY')  
         # gridUrl: gridUrl can be found at automation dashboard
-        gridUrl = "hub.lambdatest.com/wd/hub"
+        gridUrl = os.getenv('LT_GRID_URL')
         # get tunnel name
         lambda_tunnel= False
+        if os.getenv('LT_TUNNEL_NAME') is not None: 
+           lambda_tunnel=True 
         
         desired_cap = {
             'platform' : "win10", 
@@ -50,6 +53,7 @@ class LTAutomate(unittest.TestCase):
             "video": True,
             "visual": True,
             "console": True,
+            "tunnel":lambda_tunnel,
         }
 
         # URL: https://{username}:{accessToken}@beta-hub.lambdatest.com/wd/hub
