@@ -45,7 +45,7 @@ class LTAutomate(unittest.TestCase):
             # Resolution of machine
             "resolution": "1024x768", 
             "name": "LambdaTest python google search test ",
-            "build": "Slack build check1",
+            "build": "Azure pipeline extension",
             "network": True,
             "video": True,
             "visual": True,
