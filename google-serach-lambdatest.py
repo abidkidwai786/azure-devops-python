@@ -47,7 +47,7 @@ class LTAutomate(unittest.TestCase):
             'version' :  "67.0",
             # Resolution of machine
             "resolution": "1024x768", 
-            "name": "LambdaTest python google search test ",
+            "name": "Azure pipeline extension google search test ",
             "build": "Azure pipeline extension",
             "network": True,
             "video": True,
