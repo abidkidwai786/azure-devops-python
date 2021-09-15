@@ -48,6 +48,7 @@ def call():
         print("quit time {0} secs".format((time.time()-start_time) % 60))
     except Exception as e: 
         print(e)
+        driver.quit()
 
 if __name__ == '__main__':
     jobs = []
