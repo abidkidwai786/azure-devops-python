@@ -15,7 +15,7 @@ def call():
     desired_cap = {
         "browserName":"Chrome",
         "console": True,
-        "build": "Idle Timeout issue-4",
+        "build": "Idle Timeout issue-5",
         "name" : "Test 1",
         "version":"latest",                   #88.0
         "headless":False,
@@ -52,7 +52,7 @@ def call():
 
 if __name__ == '__main__':
     jobs = []
-    for i in range(2):
+    for i in range(1):
         p = multiprocessing.Process(target=call)
         jobs.append(p)
         p.start()
