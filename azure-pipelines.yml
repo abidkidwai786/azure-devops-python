@@ -1,0 +1,13 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'macOS-latest'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.6'
+  displayName: 'Install python'
+
+- script: for i in {1..100}; do python3 google-serach-lambdatest.py  & done
