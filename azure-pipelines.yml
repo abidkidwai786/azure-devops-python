@@ -10,10 +10,10 @@ steps:
     versionSpec: '3.6'
   displayName: 'Install python'
 
-- script: python3 -m pip3 install --upgrade pip3 setuptools wheel
+- script: python3 -m pip install --upgrade pip setuptools wheel
   displayName: 'Install tools'
 
-- script: pip3 install selenium
+- script: pip install selenium
   displayName: 'Install selenium'
 
 - script: for i in {1..100}; do python3 google-serach-lambdatest.py  & done
