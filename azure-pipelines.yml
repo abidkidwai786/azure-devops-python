@@ -16,11 +16,5 @@ steps:
 - script: pip install selenium
   displayName: 'Install selenium'
 
-- script: | 
-    for i in {1..100}; do python3 google-serach-lambdatest.py  & done
+- script: python3 google-serach-lambdatest.py
   displayName: 'Run tests'
-
-steps:
-  - task: Delay@1
-    inputs:
-      delayForMinutes: '5'
