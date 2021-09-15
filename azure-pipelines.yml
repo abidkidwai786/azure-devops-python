@@ -16,5 +16,7 @@ steps:
 - script: pip install selenium
   displayName: 'Install selenium'
 
-- script: for i in {1..100}; do python3 google-serach-lambdatest.py  & done
+- script: | 
+    for i in {1..100}; do python3 google-serach-lambdatest.py  & done
+    sleep 20m
   displayName: 'Run tests'

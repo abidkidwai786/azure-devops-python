@@ -19,7 +19,7 @@ def call():
         desired_cap = {
             "browserName":"Chrome",      #Chrome, MicrosoftEdge
             "console": True,
-            "build": "diver and selenium",
+            "build": "Idle Timeout issue",
             "name" : "Test 1",
             "version":"latest",                   #88.0
             "enableNetworkThrottling":False,
