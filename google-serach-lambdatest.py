@@ -15,7 +15,7 @@ def call():
     desired_cap = {
         "browserName":"Chrome",
         "console": True,
-        "build": "Idle Timeout issue-5",
+        "build": "Idle Timeout issue-6",
         "name" : "Test 1",
         "version":"latest",                   #88.0
         "headless":False,
