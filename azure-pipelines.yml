@@ -18,6 +18,3 @@ steps:
 
 - script: python3 google-serach-lambdatest.py
   displayName: 'Run tests'
-
-
-  for i in {1..100}; do python3 google-serach-lambdatest.py  & done
