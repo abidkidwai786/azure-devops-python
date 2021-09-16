@@ -52,7 +52,7 @@ def call():
 
 if __name__ == '__main__':
     jobs = []
-    for i in range(1):
+    for i in range(10):
         p = multiprocessing.Process(target=call)
         jobs.append(p)
         p.start()
