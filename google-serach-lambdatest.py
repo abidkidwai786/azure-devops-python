@@ -1,60 +1,101 @@
-#!/usr/local/bin/python
-
-import time
-import multiprocessing
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-import urllib3
-import sys
-import threading
+import unittest
+import os
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.chrome.options import Options
 
-def call():
-    desired_cap = {
-        "browserName":"Chrome",
-        "console": True,
-        "build": "Idle Timeout issue-10",
-        "name" : "Test 1",
-        "version":"latest",                   #88.0
-        "headless":False,
-        "network": False,
-        "platformName": "Windows 10",
-        "resolution":"1024x768",
-        "video":True,
-        "visual":True,
-        "w3c":True
-    }
-    try:
-        url = "https://divyanks:XFSP1IqZMWTXUC1iwbVqFCClLX654vuFg8OZUMyCfwbfygavq1@hub.lambdatest.com/wd/hub"
-        print(desired_cap)
-        driver=webdriver.Remote(desired_capabilities=desired_cap,command_executor=url)
-        print(driver.session_id)
-        # driver.get("https://mylocation.org/")
-        # driver.get("https://www.whatismybrowser.com/")
-        driver.get("https://www.google.com/")
-        driver.get("https://www.halowaypoint.com/en-us/games/halo-infinite")
-        print("=============1===========")
-        # driver.get("https://www.serverless.com/blog/cors-api-gateway-survival-guide")
-        driver.get("https://en.wikipedia.org/wiki/Halo_Infinite")
-        print("=============2===========")
-        # driver.get("https://www.thrillophilia.com/best-mountain-trek-in-india")
-        # driver.get("https://indiahikes.com/")
-        driver.get("https://www.facebook.com/")
-        print("=============3===========")
-        driver.get("https://google.com/")
-        start_time = time.time()
-        driver.quit()
-        print("quit time {0} secs".format((time.time()-start_time) % 60))
-    except Exception as e: 
-        print(e)
-        driver.quit()
+username = os.getenv("LT_USERNAME")  # Replace the username
+access_key = os.getenv("LT_ACCESS_KEY")  # Replace the access key
 
-if __name__ == '__main__':
-    jobs = []
-    for i in range(2):
-        p = multiprocessing.Process(target=call)
-        jobs.append(p)
-        p.start()
+
+# paste your capibility options below
+
+options = ChromeOptions()
+options.browser_version = "latest"
+options.platform_name = "win10"
+lt_options = {}
+lt_options["username"] = username
+lt_options["accessKey"] = access_key
+lt_options["video"] = True
+lt_options["resolution"] = "1920x1080"
+lt_options["network"] = True
+lt_options["build"] = "test_build"
+lt_options["project"] = "unit_testing"
+lt_options["smartUI.project"] = "test"
+lt_options["name"] = "basic_unit_selinium"
+lt_options["w3c"] = True
+lt_options["plugin"] = "python-python"
+options.set_capability("LT:Options", lt_options)
+
+
+# Steps to run Smart UI project (https://beta-smartui.lambdatest.com/)
+# Step - 1 : Change the hub URL to @beta-smartui-hub.lambdatest.com/wd/hub
+# Step - 2 : Add "smartUI.project": "<Project Name>" as a capability above
+# Step - 3 : Run "driver.execute_script("smartui.takeScreenshot")" command wherever you need to take a screenshot
+# Note: for additional capabilities navigate to https://www.lambdatest.com/support/docs/test-settings-options/
+
+
+class FirstSampleTest(unittest.TestCase):
+    driver = None
+
+    def setUp(self):
+        self.driver = webdriver.Remote(
+            command_executor="http://{}:{}@hub.lambdatest.com/wd/hub".format(
+                username, access_key
+            ),
+            options=options,
+        )
+
+    # """ You can write the test cases here """
+    def test_demo_site(self):
+        # try:
+        driver = self.driver
+        driver.implicitly_wait(10)
+        driver.set_page_load_timeout(30)
+        driver.set_window_size(1920, 1080)
+
+        # Url
+        print("Loading URL")
+        driver.get(
+            "https://stage-lambda-devops-use-only.lambdatestinternal.com/To-do-app/index.html"
+        )
+
+        # Let's click on a element
+        driver.find_element(By.NAME, "li1").click()
+        location = driver.find_element(By.NAME, "li2")
+        location.click()
+        print("Clicked on the second element")
+
+        # Take Smart UI screenshot
+        # driver.execute_script("smartui.takeScreenshot")
+
+        # Let's add a checkbox
+        driver.find_element(By.ID, "sampletodotext").send_keys("LambdaTest")
+        add_button = driver.find_element(By.ID, "addbutton")
+        add_button.click()
+        print("Added LambdaTest checkbox")
+
+        # print the heading
+        search = driver.find_element(By.CSS_SELECTOR, ".container h2")
+        assert search.is_displayed(), "heading is not displayed"
+        print(search.text)
+        search.click()
+        driver.implicitly_wait(3)
+
+        # Let's download the invoice
+        heading = driver.find_element(By.CSS_SELECTOR, ".container h2")
+        if heading.is_displayed():
+            heading.click()
+            driver.execute_script("lambda-status=passed")
+            print("Tests are run successfully!")
+        else:
+            driver.execute_script("lambda-status=failed")
+
+    # tearDown runs after each test case
+    def tearDown(self):
+        self.driver.quit()
+
+
+if __name__ == "__main__":
+    unittest.main()
 
