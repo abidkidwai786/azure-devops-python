@@ -4,11 +4,17 @@ trigger:
 pool:
   vmImage: 'Ubuntu-latest'
 
+
 steps:
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '3.6'
+    versionSpec: '3.x'
+    addToPath: true
+    architecture: 'x64'
   displayName: 'Install python'
+
+
+
 
 - script: python3 -m pip install --upgrade pip setuptools wheel
   displayName: 'Install tools'
@@ -16,5 +22,17 @@ steps:
 - script: pip install selenium
   displayName: 'Install selenium'
 
+- task: configuration@1
+  inputs:
+    connection: 'Azure-LT Check'
+    isTunnelActivate: false
+    isAppAutomate: false
+    isSmartUI: false
+
+
 - script: python3 google-serach-lambdatest.py
   displayName: 'Run tests'
+
+- task: LambdatestResults@1
+  displayName: "LambdaResults"
+
